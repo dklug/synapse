@@ -433,7 +433,7 @@ class StreamWorkerStore(EventsWorkerStore, SQLBaseStore):
                 " FROM events"
                 " WHERE room_id = ? AND stream_ordering > ?"
                 " AND NOT outlier"
-                " ORDER BY topological_ordering DESC, stream_ordering DESC"
+                " ORDER BY stream_ordering"
                 " LIMIT 1"
             )
             txn.execute(sql, (room_id, stream_ordering, ))

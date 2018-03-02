@@ -169,6 +169,10 @@ class PurgeHistoryRestServlet(ClientV1RestServlet):
                     room_id, stream_ordering,
                 )
             )
+            logger.debug(
+                "[purge] received_ts %i => stream_ordering %i => depth %i",
+                ts, stream_ordering, depth,
+            )
         else:
             raise SynapseError(
                 400,
