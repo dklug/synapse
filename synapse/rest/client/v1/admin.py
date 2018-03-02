@@ -152,6 +152,10 @@ class PurgeHistoryRestServlet(ClientV1RestServlet):
                 raise SynapseError(400, "Event is for wrong room.")
 
             depth = event.depth
+            logger.info(
+                "[purge] purging up to depth %i (event_id %s)",
+                depth, event_id,
+            )
         elif 'purge_up_to_ts' in body:
             ts = body['purge_up_to_ts']
             if not isinstance(ts, int):
@@ -169,14 +173,15 @@ class PurgeHistoryRestServlet(ClientV1RestServlet):
                     room_id, stream_ordering,
                 )
             )
-            logger.debug(
-                "[purge] received_ts %i => stream_ordering %i => depth %i",
-                ts, stream_ordering, depth,
+            logger.info(
+                "[purge] purging up to depth %i (received_ts %i => "
+                "stream_ordering %i)",
+                depth, ts, stream_ordering,
             )
         else:
             raise SynapseError(
                 400,
-                "must specify event_id or purge_up_to_ts",
+                "must specify purge_up_to_event_id or purge_up_to_ts",
                 errcode=Codes.BAD_JSON,
             )
 
