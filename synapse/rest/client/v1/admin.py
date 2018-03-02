@@ -143,7 +143,7 @@ class PurgeHistoryRestServlet(ClientV1RestServlet):
         # user can provide an event_id in the URL or the request body, or can
         # provide a timestamp in the request body.
         if event_id is None:
-            event_id = body.get['purge_up_to_event_id']
+            event_id = body.get('purge_up_to_event_id')
 
         if event_id is not None:
             event = yield self.store.get_event(event_id)
